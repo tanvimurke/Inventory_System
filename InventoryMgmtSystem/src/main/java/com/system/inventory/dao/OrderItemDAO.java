@@ -1,5 +1,5 @@
 package com.system.inventory.dao;
 
-public class Item {
+public class OrderItemDAO {
 
 }
