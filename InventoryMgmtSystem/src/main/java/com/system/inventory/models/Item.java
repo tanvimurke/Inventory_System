@@ -8,7 +8,15 @@ public class Item {
     private Unit unit ;
     private int quantity;
     
-    
+    public Item(int stockItemNumber, String itemDesc, double itemPrice) {
+		// TODO Auto-generated constructor stub
+    	this.stockItemNumber = stockItemNumber;
+    	this.itemDesc = itemDesc;
+    	this.itemPrice = itemPrice;
+	}
+    public Item() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getStockItemNumber() {
 		return stockItemNumber;
 	}
