@@ -10,6 +10,18 @@ public class PurchaseOrder {
     private boolean isShipped;
     private OrderItem[] orderItem;
     
+    public PurchaseOrder() {
+		// TODO Auto-generated constructor stub
+	}
+    
+    
+    public PurchaseOrder(int poNumber, Date orderDate, Date shipDate, boolean isShipped, int custId) {
+    	this.poNumber=poNumber;
+    	this.orderDate=orderDate;
+    	this.shipDate=shipDate;
+    	this.isShipped=isShipped;
+    	this.custID=custId;
+    }
     
 	public int getPoNumber() {
 		return poNumber;

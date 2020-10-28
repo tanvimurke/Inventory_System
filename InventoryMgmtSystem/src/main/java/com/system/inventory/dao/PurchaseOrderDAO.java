@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.system.inventory.dbmanager.DBManager;
 import com.system.inventory.models.PurchaseOrder;
@@ -56,6 +58,155 @@ public class PurchaseOrderDAO {
 		
 		return p;
 	}
+	
+	public List<PurchaseOrder> getOrderByCustomer(String name) {
+		List<PurchaseOrder> pList = new ArrayList<PurchaseOrder>();
+		PreparedStatement ps;
+		ResultSet rs;
+		
+		try {
+			ps = con.prepareStatement("select * from purchaseOrder where custId=(select custId from customer where cname='?';");
+			ps.setString(1, name);
+			rs = ps.executeQuery();
+		
+			while(rs.next()) {
+				int id = rs.getInt(1);
+				Date orderDate = rs.getDate(2);
+				Date shipDate = rs.getDate(3);
+				boolean status = rs.getBoolean(4);
+				int custId = rs.getInt(5);
+				
+				PurchaseOrder p = new  PurchaseOrder(id, orderDate, shipDate, status, custId);
+				pList.add(p);
+		
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return pList;
+	}
+	
+	public List<PurchaseOrder> getOrderToFromDate(Date start, Date end){
+		// date format eg : 2020-05-17 (yyyy-mm-dd)
+		
+		List<PurchaseOrder> pList = new ArrayList<PurchaseOrder>();
+		PreparedStatement ps;
+		ResultSet rs;
+		
+		try {
+			ps = con.prepareStatement("select * from purchaseOrder  where orderDate between cast('?' as date) and cast('?' as date);");
+			ps.setDate(1, start);
+			ps.setDate(2, end);
+			rs = ps.executeQuery();
+		
+			while(rs.next()) {
+				int id = rs.getInt(1);
+				Date orderDate = rs.getDate(2);
+				Date shipDate = rs.getDate(3);
+				boolean status = rs.getBoolean(4);
+				int custId = rs.getInt(5);
+				
+				PurchaseOrder p = new  PurchaseOrder(id, orderDate, shipDate, status, custId);
+				pList.add(p);
+		
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return pList;
+	}
+	
+	
+	
+	public List<PurchaseOrder> getOrderOnDate(Date date){
+		// date format eg : 2020-05-17 (yyyy-mm-dd)
+		List<PurchaseOrder> pList = new ArrayList<PurchaseOrder>();
+		PreparedStatement ps;
+		ResultSet rs;
+		
+		try {
+			ps = con.prepareStatement("select * from purchaseOrder  where orderDate= cast('?' as date);");
+			ps.setDate(1, date);
+			rs = ps.executeQuery();
+		
+			while(rs.next()) {
+				int id = rs.getInt(1);
+				Date orderDate = rs.getDate(2);
+				Date shipDate = rs.getDate(3);
+				boolean status = rs.getBoolean(4);
+				int custId = rs.getInt(5);
+				
+				PurchaseOrder p = new  PurchaseOrder(id, orderDate, shipDate, status, custId);
+				pList.add(p);
+		
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return pList;
+	}
+	
+	
+	public PurchaseOrder updateStatusAndShipDate(boolean status, Date shipDate, int CustId) {
+		PurchaseOrder p = new PurchaseOrder();
+		PreparedStatement ps;
+		
+		// date format eg : 2020-05-17 (yyyy-mm-dd)
+
+		
+		try {
+			ps = con.prepareStatement("update purchaseOrder set status=?, shipDate=cast('?' as date) where custId=?;");
+			ps.setBoolean(1, status);
+			ps.setDate(2, shipDate);
+			ps.setInt(3, CustId);
+			
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return p;
+	}
+	
+	
+	public List<PurchaseOrder> getDelayedOrders(){
+		List<PurchaseOrder> pList = new ArrayList<PurchaseOrder>();
+
+		PreparedStatement ps;
+		ResultSet rs;
+		
+		try {
+			ps = con.prepareStatement("select * from purchaseOrder where datediff(shipDate,orderDate)>4;");
+			rs = ps.executeQuery();
+		
+			while(rs.next()) {
+				int id = rs.getInt(1);
+				Date orderDate = rs.getDate(2);
+				Date shipDate = rs.getDate(3);
+				boolean status = rs.getBoolean(4);
+				int custId = rs.getInt(5);
+				
+				PurchaseOrder p = new  PurchaseOrder(id, orderDate, shipDate, status, custId);
+				pList.add(p);
+		
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+		
+		return pList;
+	}
+	
 	
 	/*
 	public static void main(String[] args) {
