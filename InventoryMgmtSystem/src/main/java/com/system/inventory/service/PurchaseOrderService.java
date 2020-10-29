@@ -50,7 +50,7 @@ public class PurchaseOrderService {
 		}
 	}
 	
-	public void getOrderOn() {
+	public void getOrderOnDate() {
 		System.out.println("Enter Date(dd/mm/yyyy) : ");
 		String date[] = sc.nextLine().split("/");
  		Date ondate = java.sql.Date.valueOf(LocalDate.of(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]))); 
@@ -58,7 +58,7 @@ public class PurchaseOrderService {
 		
 	}
 	
-	public void getOrderBetween() {
+	public void getOrderBetweenDates() {
 		System.out.println("Enter From Date(dd/mm/yyyy) : ");
 		String fromdate[] = sc.nextLine().split("/");
  		Date from = java.sql.Date.valueOf(LocalDate.of(Integer.parseInt(fromdate[2]), Integer.parseInt(fromdate[1]), Integer.parseInt(fromdate[0]))); 

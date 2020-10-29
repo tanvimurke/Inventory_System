@@ -3,10 +3,19 @@ package com.system.inventory.application;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import com.system.inventory.service.CustomerService;
+import com.system.inventory.service.ItemService;
+import com.system.inventory.service.PurchaseOrderService;
+
 public class Application {
 
 	public static void main(String[] args) {
 		// OUR Application RUNs here
+		CustomerService custService = new CustomerService();
+		PurchaseOrderService purchaseService = new PurchaseOrderService();
+		ItemService itemService = new ItemService();
+		Scanner sc = new Scanner(System.in);
+		
 		int choice;
 		
 		do {
@@ -30,49 +39,50 @@ public class Application {
 		    System.out.println("THANK YOU FOR SHOPPING WITH  US!");
 		    System.out.println("-----------------------------------------------------------------------------------------------");
 		    System.out.println("Please choose an option: ");
-		    Scanner sc = new Scanner(System.in);
+		    
 		    choice = sc.nextInt();
 		    
 		    try {
 		    	switch(choice) {
 		    	case 1:
-		    		addCustomer();
+		    		custService.addCustomer();
 		    		break;
 		    		
 		    	case 2:
-		    		addPurchaseOrder();
+		    		purchaseService.addPurchaseOrder();
 		    		break;
 		    		
 		    	case 3:
-		    		addStockItem();
+		    		itemService.addStockItem();
 		    		break;
 		    	
 		    	case 4:
-		    		getCustomerInfo();
+		    		System.out.println("Enter Customer Id(Cell Phone) : ");
+		    		custService.getCustomer(sc.nextInt());
 		    		break;	
 		    		
 		    	case 5:
-		    		getCustomerOrder();
+		    		purchaseService.getOrdersByCustomer();
 		    		break;	
 		    		
 		    	case 6:
-		    		getOrdersToFromDate();
+		    		purchaseService.getOrderBetweenDates();
 		    		break;	
 		    		
 		    	case 7:
-		    		getOrdersOnDate();
+		    		purchaseService.getOrderOnDate();
 		    		break;	
 		    		
 		    	case 8:
-		    		updateOrderStatus();
+		    		purchaseService.isOrderShipped();
 		    		break;
 		    		
 		    	case 9:
-		    		getDelayedOrders();
+		    		purchaseService.fetchDelayedOrders();
 		    		break;	
 		    	
 		    	case 10:
-		    		getAllStockItems();
+		    		itemService.getAllStockItems();
 		    		break;	
 		    		
 		    	case 11:
@@ -129,55 +139,7 @@ public class Application {
 		
 	}
 
-	private static void getAllStockItems() {
-		// TODO Auto-generated method stub
-		
-	}
 
-	private static void getDelayedOrders() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private static void updateOrderStatus() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private static void getOrdersOnDate() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private static void getOrdersToFromDate() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private static void getCustomerOrder() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private static void getCustomerInfo() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private static void addStockItem() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private static void addPurchaseOrder() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private static void addCustomer() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	
 	
