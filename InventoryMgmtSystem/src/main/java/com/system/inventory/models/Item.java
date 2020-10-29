@@ -6,7 +6,7 @@ public class Item {
     private String itemDesc;
     private double itemPrice; 
     private Unit unit ;
-    private int quantity;
+    private int stockQuantity;
     
     public Item(int stockItemNumber, String itemDesc, double itemPrice) {
 		// TODO Auto-generated constructor stub
@@ -41,11 +41,11 @@ public class Item {
 	public void setUnit(Unit unit) {
 		this.unit = unit;
 	}
-	public int getQuantity() {
-		return quantity;
+	public int getStockQuantity() {
+		return stockQuantity;
 	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setStockQuantity(int quantity) {
+		this.stockQuantity = quantity;
 	} 
 	
     
