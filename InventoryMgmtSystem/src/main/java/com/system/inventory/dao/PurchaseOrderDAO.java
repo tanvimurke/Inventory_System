@@ -24,7 +24,7 @@ public class PurchaseOrderDAO {
 			ps.setDate(2, p.getOrderDate());
 			ps.setDate(3, p.getShipDate());
 			ps.setBoolean(4, p.isShipped());
-			ps.setInt(5, p.getCustID());
+			ps.setLong(5, p.getCustID());
 			
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -153,7 +153,7 @@ public class PurchaseOrderDAO {
 	}
 	
 	
-	public PurchaseOrder updateStatusAndShipDate(boolean status, Date shipDate, int CustId) {
+	public PurchaseOrder updateStatusAndShipDate(boolean status, Date shipDate, long CustId) {
 		PurchaseOrder p = new PurchaseOrder();
 		PreparedStatement ps;
 		
@@ -164,7 +164,7 @@ public class PurchaseOrderDAO {
 			ps = con.prepareStatement("update purchaseOrder set status=?, shipDate=cast('?' as date) where custId=?;");
 			ps.setBoolean(1, status);
 			ps.setDate(2, shipDate);
-			ps.setInt(3, CustId);
+			ps.setLong(3, CustId);
 			
 			ps.executeUpdate();
 			

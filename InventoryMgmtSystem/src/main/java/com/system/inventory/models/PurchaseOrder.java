@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class PurchaseOrder {
 	private int poNumber;
-    private int custID;
+    private long custID;
     private Date shipDate;
     private Date orderDate;
     private boolean isShipped;
@@ -29,11 +29,11 @@ public class PurchaseOrder {
 	public void setPoNumber(int poNumber) {
 		this.poNumber = poNumber;
 	}
-	public int getCustID() {
+	public long getCustID() {
 		return custID;
 	}
-	public void setCustID(int custID) {
-		this.custID = custID;
+	public void setCustID(long l) {
+		this.custID = l;
 	}
 	public Date getShipDate() {
 		return shipDate;

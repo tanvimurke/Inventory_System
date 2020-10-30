@@ -35,7 +35,7 @@ public class CustomerService {
 		c.setZip(sc.nextLine());
 		
 		c.setState("Maharashtra");
-		c.setCustID(Integer.parseInt(c.getCellPhone()));
+		c.setCustID(Long.parseLong(c.getCellPhone()));
 		
 		custDao.addCustomer(c);
 	}

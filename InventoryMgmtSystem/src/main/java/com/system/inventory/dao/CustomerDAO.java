@@ -13,11 +13,12 @@ public class CustomerDAO {
 	Connection con = DBManager.getConnection();
 	
 	public void addCustomer(Customer c) {
-		PreparedStatement ps;
+		
 		
 		try {
-			ps = con.prepareStatement("insert into customer values (?,?,?)");
-			ps.setInt(1, c.getCustID());
+			System.out.println("connection :::::: "+con);
+			PreparedStatement ps = con.prepareStatement("insert into customer values (?,?,?)");
+			ps.setLong(1, c.getCustID());
 			ps.setString(2, c.getCustName());
 			String addr = c.getStreet() + " " + c.getCity() + " " + c.getState();
 			ps.setString(3, addr);

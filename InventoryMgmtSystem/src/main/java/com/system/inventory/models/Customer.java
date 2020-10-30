@@ -1,7 +1,7 @@
 package com.system.inventory.models;
 
 public class Customer {
-	private int custID;
+	private long custID;
     private String custName;
     private String homePhone; 
     private String workPhone ;
@@ -12,10 +12,10 @@ public class Customer {
     private String zip;
     
     
-	public int getCustID() {
+	public long getCustID() {
 		return custID;
 	}
-	public void setCustID(int custID) {
+	public void setCustID(long custID) {
 		this.custID = custID;
 	}
 	public String getCustName() {
