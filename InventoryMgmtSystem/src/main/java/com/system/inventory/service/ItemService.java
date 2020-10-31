@@ -16,7 +16,7 @@ public class ItemService {
 		
 		System.out.println("Enter Stock Item Number: ");
 		i.setStockItemNumber(sc.nextInt());
-		
+		sc.nextLine();
 		System.out.println("Enter Item Description: ");
 		i.setItemDesc(sc.nextLine());
 		
@@ -29,12 +29,16 @@ public class ItemService {
 		itemDao.addItem(i);
 	}
 
+	public Item getItem(int id) {
+		return itemDao.getItem(id);
+	}
+	
+	
 	public void getAllStockItems() {
 		ArrayList<Item> items = (ArrayList<Item>) itemDao.getAllItems();
 		System.out.println("List of Stock Items :");
-		int cnt=1;
 		for (Item item : items) {
-			System.out.println((cnt++) +". "+item);
+			System.out.println(item);
 		}
 	}
 }

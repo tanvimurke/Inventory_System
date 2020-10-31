@@ -3,10 +3,13 @@ package com.system.inventory.service;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.system.inventory.dao.PurchaseOrderDAO;
 import com.system.inventory.models.Customer;
+import com.system.inventory.models.Item;
+import com.system.inventory.models.OrderItem;
 import com.system.inventory.models.PurchaseOrder;
 
 public class PurchaseOrderService {
@@ -14,6 +17,7 @@ public class PurchaseOrderService {
 	static PurchaseOrderDAO purchaseOrdDao = new PurchaseOrderDAO();
 	static CustomerService custService  = new CustomerService();
 	static ItemService itemService = new ItemService();
+	static OrderItemService orderService = new OrderItemService();
 	
 	static Scanner sc = new Scanner(System.in);
 	
@@ -21,10 +25,16 @@ public class PurchaseOrderService {
 		System.out.println("Enter Customer Cell Phone(Customer ID): ");
 		String custId = sc.nextLine();
 		
-		Customer cust = custService.getCustomer(Integer.parseInt(custId));
+		Customer cust = custService.getCustomer(Long.parseLong(custId));
 		
 		PurchaseOrder p = new PurchaseOrder();
+		
+		System.out.println("Enter Purchase Order Number: ");
+		p.setPoNumber(sc.nextInt());
+		sc.nextLine();
+		
 		p.setCustID(cust.getCustID());
+		
 		p.setOrderDate(new Date(new java.util.Date().getTime()));
 		
 		System.out.println("Enter the Shipping Date(dd/mm/yyyy)");
@@ -33,11 +43,41 @@ public class PurchaseOrderService {
 		p.setShipDate(shipDate);
 		p.setShipped(true);
 		
-		// Add Item here!!
-
-		
-		
 		purchaseOrdDao.addPurchaseOrder(p);
+		// Add Item here!!
+			while(true) {
+				itemService.getAllStockItems();
+				System.out.println("0. Exit");
+				System.out.println("Enter Item number to add : ");
+				int ch = sc.nextInt();
+				if(ch ==0 )
+					break;
+				else {
+					Item item = itemService.getItem(ch);
+					sc.nextLine();
+					
+					OrderItem order = new OrderItem();
+					order.setItem(item);
+					
+					order.setStockItemNumber(ch);
+					
+					System.out.println("Enter Order Number: ");
+					order.setOrderItemNumber(sc.nextInt());
+					sc.nextLine();
+					
+					System.out.println("Enter quantity: ");
+					order.setNumberOfItems(sc.nextInt()); 
+					sc.nextLine();
+					
+					order.setPoNumber(p.getPoNumber());
+					
+					System.out.println(p.getPoNumber());
+					orderService.addOrder(order);
+				}
+				
+			}
+		
+		
 	}
 	
 	public void getOrdersByCustomer() {
@@ -54,7 +94,10 @@ public class PurchaseOrderService {
 		System.out.println("Enter Date(dd/mm/yyyy) : ");
 		String date[] = sc.nextLine().split("/");
  		Date ondate = java.sql.Date.valueOf(LocalDate.of(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]))); 
-		purchaseOrdDao.getOrderOnDate(ondate);
+		ArrayList<PurchaseOrder> pOList = (ArrayList<PurchaseOrder>) purchaseOrdDao.getOrderOnDate(ondate);
+		for (PurchaseOrder purchaseOrder : pOList) {
+			System.out.println(purchaseOrder);
+		}
 		
 	}
 	
@@ -77,9 +120,10 @@ public class PurchaseOrderService {
 		System.out.println("Enter Customer Cell Phone(Customer ID): ");
 		String custId = sc.nextLine();
 		
-		Customer cust = custService.getCustomer(Integer.parseInt(custId));
+		Customer cust = custService.getCustomer(Long.parseLong(custId));
 	
-		purchaseOrdDao.updateStatusAndShipDate(true, new Date(new java.util.Date().getTime()), cust.getCustID());
+		PurchaseOrder p = purchaseOrdDao.updateStatusAndShipDate(true, new Date(new java.util.Date().getTime()), cust.getCustID());
+		System.out.println(p);
 	}
 	
 	public void totalOrdersShippedPerMonth() {

@@ -14,6 +14,7 @@ import com.system.inventory.models.PurchaseOrder;
 public class PurchaseOrderDAO {
 
 	Connection con = DBManager.getConnection();
+	static OrderItemDAO oIDao = new OrderItemDAO();
 	
 	public void addPurchaseOrder(PurchaseOrder p) {
 		PreparedStatement ps;
@@ -60,12 +61,13 @@ public class PurchaseOrderDAO {
 	}
 	
 	public List<PurchaseOrder> getOrderByCustomer(String name) {
+		System.out.println(name);
 		List<PurchaseOrder> pList = new ArrayList<PurchaseOrder>();
 		PreparedStatement ps;
 		ResultSet rs;
 		
 		try {
-			ps = con.prepareStatement("select * from purchaseOrder where custId=(select custId from customer where cname='?';");
+			ps = con.prepareStatement("select * from purchaseOrder where custId=(select custId from customer where cname=?);");
 			ps.setString(1, name);
 			rs = ps.executeQuery();
 		
@@ -74,9 +76,12 @@ public class PurchaseOrderDAO {
 				Date orderDate = rs.getDate(2);
 				Date shipDate = rs.getDate(3);
 				boolean status = rs.getBoolean(4);
-				int custId = rs.getInt(5);
+				long custId = rs.getLong(5);
 				
 				PurchaseOrder p = new  PurchaseOrder(id, orderDate, shipDate, status, custId);
+				p.setOrderItem(oIDao.getOrdersByPurchaseID(p.getPoNumber()));
+				
+				
 				pList.add(p);
 		
 			}
@@ -96,7 +101,7 @@ public class PurchaseOrderDAO {
 		ResultSet rs;
 		
 		try {
-			ps = con.prepareStatement("select * from purchaseOrder  where orderDate between cast('?' as date) and cast('?' as date);");
+			ps = con.prepareStatement("select * from purchaseOrder  where orderDate between cast(? as date) and cast(? as date);");
 			ps.setDate(1, start);
 			ps.setDate(2, end);
 			rs = ps.executeQuery();
@@ -106,9 +111,11 @@ public class PurchaseOrderDAO {
 				Date orderDate = rs.getDate(2);
 				Date shipDate = rs.getDate(3);
 				boolean status = rs.getBoolean(4);
-				int custId = rs.getInt(5);
+				long custId = rs.getLong(5);
 				
 				PurchaseOrder p = new  PurchaseOrder(id, orderDate, shipDate, status, custId);
+				p.setOrderItem(oIDao.getOrdersByPurchaseID(p.getPoNumber()));
+				
 				pList.add(p);
 		
 			}
@@ -129,7 +136,7 @@ public class PurchaseOrderDAO {
 		ResultSet rs;
 		
 		try {
-			ps = con.prepareStatement("select * from purchaseOrder  where orderDate= cast('?' as date);");
+			ps = con.prepareStatement("select * from purchaseOrder  where orderDate= cast(? as date);");
 			ps.setDate(1, date);
 			rs = ps.executeQuery();
 		
@@ -138,9 +145,10 @@ public class PurchaseOrderDAO {
 				Date orderDate = rs.getDate(2);
 				Date shipDate = rs.getDate(3);
 				boolean status = rs.getBoolean(4);
-				int custId = rs.getInt(5);
+				long custId = rs.getLong(5);
 				
 				PurchaseOrder p = new  PurchaseOrder(id, orderDate, shipDate, status, custId);
+				p.setOrderItem(oIDao.getOrdersByPurchaseID(p.getPoNumber()));
 				pList.add(p);
 		
 			}
@@ -161,7 +169,7 @@ public class PurchaseOrderDAO {
 
 		
 		try {
-			ps = con.prepareStatement("update purchaseOrder set status=?, shipDate=cast('?' as date) where custId=?;");
+			ps = con.prepareStatement("update purchaseOrder set status=?, shipDate=cast(? as date) where custId=?;");
 			ps.setBoolean(1, status);
 			ps.setDate(2, shipDate);
 			ps.setLong(3, CustId);
@@ -192,9 +200,10 @@ public class PurchaseOrderDAO {
 				Date orderDate = rs.getDate(2);
 				Date shipDate = rs.getDate(3);
 				boolean status = rs.getBoolean(4);
-				int custId = rs.getInt(5);
+				long custId = rs.getLong(5);
 				
 				PurchaseOrder p = new  PurchaseOrder(id, orderDate, shipDate, status, custId);
+				p.setOrderItem(oIDao.getOrdersByPurchaseID(p.getPoNumber()));
 				pList.add(p);
 		
 			}

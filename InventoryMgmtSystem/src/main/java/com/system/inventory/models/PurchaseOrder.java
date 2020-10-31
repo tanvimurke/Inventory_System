@@ -1,6 +1,8 @@
 package com.system.inventory.models;
 
 import java.sql.Date;
+import java.util.Arrays;
+import java.util.List;
 
 public class PurchaseOrder {
 	private int poNumber;
@@ -8,14 +10,14 @@ public class PurchaseOrder {
     private Date shipDate;
     private Date orderDate;
     private boolean isShipped;
-    private OrderItem[] orderItem;
+    private List<OrderItem> orderItem;
     
     public PurchaseOrder() {
 		// TODO Auto-generated constructor stub
 	}
     
     
-    public PurchaseOrder(int poNumber, Date orderDate, Date shipDate, boolean isShipped, int custId) {
+    public PurchaseOrder(int poNumber, Date orderDate, Date shipDate, boolean isShipped, long custId) {
     	this.poNumber=poNumber;
     	this.orderDate=orderDate;
     	this.shipDate=shipDate;
@@ -53,12 +55,22 @@ public class PurchaseOrder {
 	public void setShipped(boolean isShipped) {
 		this.isShipped = isShipped;
 	}
-	public OrderItem[] getOrderItem() {
+	public List<OrderItem> getOrderItem() {
 		return orderItem;
 	}
-	public void setOrderItem(OrderItem[] orderItem) {
+	public void setOrderItem(List<OrderItem> orderItem) {
 		this.orderItem = orderItem;
 	}
+
+
+	@Override
+	public String toString() {
+		return "PurchaseOrder [poNumber=" + poNumber + ", custID=" + custID + ", shipDate=" + shipDate + ", orderDate="
+				+ orderDate + ", isShipped=" + isShipped + ", orderItem=" + orderItem + "]";
+	}
+
+
+	
 
     
     

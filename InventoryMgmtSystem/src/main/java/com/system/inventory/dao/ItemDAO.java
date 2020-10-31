@@ -59,6 +59,32 @@ public class ItemDAO {
 		return itemList;
 	}
 	
+	public Item getItem(int id) {
+		Item item = new Item();
+		PreparedStatement ps;
+		ResultSet rs;
+		
+		try {
+			ps = con.prepareStatement("select * from item where iId = ?;");
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				item.setItemDesc(rs.getString(2));
+				item.setItemPrice(rs.getDouble(3));
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+		
+		return item;
+	}
+	
+	
 	/*
 	public static void main(String[] args) {
 		Item i = new Item();

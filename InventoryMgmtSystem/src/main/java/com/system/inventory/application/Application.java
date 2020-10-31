@@ -41,7 +41,7 @@ public class Application {
 		    System.out.println("Please choose an option: ");
 		    
 		    choice = sc.nextInt();
-		    
+		    sc.nextLine();
 		    try {
 		    	switch(choice) {
 		    	case 1:
@@ -58,7 +58,7 @@ public class Application {
 		    	
 		    	case 4:
 		    		System.out.println("Enter Customer Id(Cell Phone) : ");
-		    		custService.getCustomer(sc.nextInt());
+		    		System.out.println(custService.getCustomer(sc.nextLong()));
 		    		break;	
 		    		
 		    	case 5:

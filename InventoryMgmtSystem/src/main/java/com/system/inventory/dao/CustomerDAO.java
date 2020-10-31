@@ -31,18 +31,18 @@ public class CustomerDAO {
 	}
 	
 	
-	public Customer getCustomerById(int id) {
+	public Customer getCustomerById(long id) {
 		Customer c = new Customer();
 		PreparedStatement ps;
 		ResultSet rs;
 		
 		try {
 			ps = con.prepareStatement("select * from customer where cid=?");
-			ps.setInt(1, id);
+			ps.setLong(1, id);
 			rs = ps.executeQuery();
 			
 			if(rs.next()) {
-				c.setCustID(rs.getInt(1));
+				c.setCustID(rs.getLong(1));
 				c.setCustName(rs.getString(2));
 				String a = rs.getString(3);
 				

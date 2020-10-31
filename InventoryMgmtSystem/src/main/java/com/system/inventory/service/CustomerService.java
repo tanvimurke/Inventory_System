@@ -40,7 +40,7 @@ public class CustomerService {
 		custDao.addCustomer(c);
 	}
 	
-	public Customer getCustomer(int id) {
+	public Customer getCustomer(long id) {
 		return custDao.getCustomerById(id);
 	}
 	
